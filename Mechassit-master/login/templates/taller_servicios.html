@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <title>Dashboard Sidebar Menu</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    :root {
+      /* ===== Colors ===== */
+      --body-color: #18191a;
+      --sidebar-color: #242526;
+      --primary-color: #0094FF;
+      --primary-color-light: #3a3b3c;
+      --text-color: #fff; /* Cambio de color de texto a blanco */
+      /* ====== Transition ====== */
+      --tran-03: all 0.2s ease;
+      --tran-04: all 0.3s ease;
+      --tran-05: all 0.3s ease;
+
+      --border-radius: 6px;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--body-color);
+      transition: var(--tran-05);
+    }
+
+    ::selection {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      padding: 10px 14px;
+      background: var(--sidebar-color);
+      transition: var(--tran-05);
+      z-index: 100;
+    }
+
+    .sidebar li {
+      height: 50px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .sidebar header .image,
+    .sidebar .icon {
+      min-width: 60px;
+      border-radius: 6px;
+    }
+
+    .sidebar .icon {
+      min-width: 60px;
+      border-radius: 6px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--text-color); /* Cambio de color de iconos */
+    }
+
+    .sidebar .text,
+    .sidebar .icon {
+      color: var(--text-color);
+      transition: var(--tran-03);
+    }
+
+    .sidebar .text {
+      font-size: 17px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 1;
+    }
+
+    .sidebar header {
+      position: relative;
+    }
+
+    .sidebar header .image-text {
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar header .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    header .image-text .name {
+      margin-top: 2px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff; /* Cambio de color de texto a blanco */
+    }
+
+    header .image-text .profession {
+      font-size: 16px;
+      margin-top: -2px;
+      display: block;
+      color: #0094FF; /* Cambio de color de texto a azul */
+    }
+
+    .sidebar header .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar header .image img {
+      width: 40px;
+      border-radius: 6px;
+    }
+
+    .sidebar .menu {
+      margin-top: 40px;
+    }
+
+    .sidebar li.search-box {
+      border-radius: 6px;
+      background-color: var(--primary-color-light);
+      cursor: pointer;
+      transition: var(--tran-05);
+    }
+
+    .sidebar li.search-box input {
+      height: 100%;
+      width: 100%;
+      outline: none;
+      border: none;
+      background-color: var(--primary-color-light);
+      color: var(--text-color);
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: 500;
+      transition: var(--tran-05);
+    }
+
+    .sidebar li a {
+      list-style: none;
+      height: 100%;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: var(--tran-03);
+    }
+
+    .sidebar li a:hover {
+      background-color: var(--primary-color);
+    }
+
+    .sidebar li a:hover .icon,
+    .sidebar li a:hover .text {
+      color: var(--sidebar-color);
+    }
+
+    .sidebar .menu-bar {
+      height: calc(100% - 55px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: scroll;
+    }
+
+    .menu-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .home {
+      position: absolute;
+      top: 0;
+      top: 0;
+      left: 250px;
+      height: 100vh;
+      width: calc(100% - 250px);
+      background-color: var(--body-color);
+      transition: var(--tran-05);
+    }
+
+    .home .text {
+      font-size: 30px;
+      font-weight: 500;
+      color: var(--text-color);
+      padding: 12px 60px;
+    }
+
+/* Estilos para quitar el fondo del formulario y botones redondeados */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.form-container h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    color: white;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: transparent;
+    color: white;
+    outline: none;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px; /* Redondea los botones */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #0094FF; /* Cambia el fondo a azul */
+    color: white; /* Cambia el color del texto a blanco */
+    margin-right: 10px;
+}
+
+.btn-primary:last-child {
+    background-color: var(--primary-color-light); /* Cambia el fondo del segundo botón a otro color si es necesario */
+    color: white; /* Cambia el color del texto a blanco */
+}
+
+.sidebar .menu-links .nav-link.profile {
+  background-color: var(--primary-color);
+}
+
+/* Estilo para el ícono del perfil */
+.sidebar .menu-links .nav-link.profile .icon {
+  color: var(--sidebar-color); /* Cambio de color de ícono en el estado base */
+}
+
+/* Estilo para el texto del perfil */
+.sidebar .menu-links .nav-link.profile .text {
+  color: var(--sidebar-color); /* Cambio de color de texto en el estado base */
+}
+/* Estilo base para el elemento de "Perfil" */
+.sidebar .menu-links .nav-link.profile {
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius); /* Aplica esquinas redondeadas */
+}
+  
+    /* Estilos para el formulario de agregar vehículo */
+    #addVehicleForm {
+      display: none;
+      width: 100%;
+    }
+
+    .add-vehicle-form {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    .add-vehicle-form label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .add-vehicle-form select,
+    .add-vehicle-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .add-vehicle-form .form-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .add-vehicle-button {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .add-vehicle-button:hover {
+      background-color: var(--primary-color-light);
+    }
+
+    .add-vehicle-button .add-icon {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    /* Estilos para las tarjetas de vehículos */
+    .vehicle-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .vehicle-icon {
+      font-size: 24px;
+      color: var(--primary-color);
+    }
+
+    .vehicle-content {
+      flex-grow: 1;
+      margin-left: 20px;
+    }
+
+    .vehicle-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .edit-button,
+    .delete-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--primary-color);
+      margin-left: 10px;
+      transition: color 0.3s;
+    }
+
+    .edit-button:hover,
+    .delete-button:hover {
+      color: var(--primary-color-light);
+    }
+  </style>
+</head>
+
+
+<body>
+  <nav class="sidebar">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="logo.png" alt="">
+        </span>
+        <div class="text logo-text">
+          <span class="name">Mechassit</span>
+          <span class="profession" style="color: #0094FF;">Tu auto, tu elección</span>
+        </div>
+      </div>
+    </header>
+    <div class="menu-bar">
+      <div class="menu">
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a href="{%url 'tanalitica' %}">
+              <i class='bx bx-analyse icon'></i>
+              <span class="text nav-text">Analtica</span>
+            </a>
+          </li>
+          <li class="nav-link">
+            <a href="{%url 'tcalendario' %}">
+              <i class='bx bx-time icon'></i>
+              <span class="text nav-text">Citas</span>
+            </a>
+          </li>
+          <li class="nav-link profile">
+            <a href="{%url 'tservicios' %}">
+              <i class='bx bx-gas-pump icon'></i>
+              <span class="text nav-text">Servicios</span>
+            </a>
+          </li>
+          <li class="nav-link">
+            <a href="{%url 'tnotificaciones' %}">
+              <i class='bx bx-bell icon'></i>
+              <span class="text nav-text">Notificaciones</span>
+            </a>
+          </li>
+          <li class="nav-link">
+            <a href="{%url 'tperfil' %}">
+              <i class='bx bx-edit icon'></i>
+              <span class="text nav-text">Perfil</span>
+            </a>
+          </li>
+          <li class="nav-link">
+            <a href="{%url 'principal' %}">
+              <i class='bx bx-log-out icon'></i>
+              <span class="text nav-text">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="home">
+    <div class="text">Tus servicios</div>
+
+    <!-- Botón para agregar vehículo -->
+    <!-- Modificar el código con los servicios -->
+    <div class="add-vehicle-button" onclick="showAddVehicleForm()">
+      <div class="add-icon"><i class='bx bx-plus-circle'></i></div>
+      Agregar Servicio
+    </div>
+
+    <!-- Formulario para agregar vehículo -->
+    <!-- modificar toda esta sección -->
+    <div class="add-vehicle-form" id="addVehicleForm">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_tipo">Tipo de Servicio:</label>
+            {{ form.tipo }}
+        </div>
+        <div class="form-group">
+            <label for="id_tiempo">Duración aproximada del servicio:</label>
+            {{ form.tiempo }}
+        </div>
+        <div class="form-group">
+            <label for="id_precio">Precio aproximado del servicio:</label>
+            {{ form.precio }}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="add-service-button">
+                <box-icon name='plus' color='#0094ff'></box-icon> Agregar Servicio
+            </button>
+        </div>
+    </form>
+    
+    </div>
+
+    <!-- Contenedor de tarjetas de vehículos -->
+    <div id="vehicleContainer"></div>
+  </section>
+
+<!-- Script para mostrar/ocultar el formulario al hacer clic en el botón -->
+Aquí tienes el código JavaScript actualizado para tu página con servicios:
+
+```html
+<script>
+  // Datos de ejemplo (puedes cargar estos datos desde Django)
+  const servicios = [
+    { type: "Mantenimiento", time: "1 hora", price: "$300 - $1,000" },
+    { type: "Frenos", time: "2 horas", price: "$1,000" },
+  ];
+
+  // Función para mostrar el formulario de agregar servicio
+  function showAddServiceForm() {
+    document.getElementById("addServiceForm").style.display = "block";
+  }
+
+  // Función para ocultar el formulario de agregar servicio
+  function hideAddServiceForm() {
+    document.getElementById("addServiceForm").style.display = "none";
+  }
+
+  // Función para agregar un servicio
+  function addService() {
+    const serviceType = document.getElementById("serviceType").value;
+    const serviceTime = document.getElementById("serviceTime").value;
+    const servicePrice = document.getElementById("servicePrice").value;
+
+    // Agrega la lógica de Django y Python para guardar el servicio en la base de datos aquí
+
+    // Ejemplo de agregar un servicio a la lista (simulado)
+    servicios.push({ type: serviceType, time: serviceTime, price: servicePrice });
+
+    // Oculta el formulario de agregar servicio
+    hideAddServiceForm();
+
+    // Muestra los servicios actualizados
+    showServices();
+  }
+
+  // Función para mostrar los servicios en la página
+  function showServices() {
+    const serviceList = document.getElementById("serviceList");
+    serviceList.innerHTML = "";
+
+    servicios.forEach((service, index) => {
+      const serviceItem = document.createElement("li");
+      serviceItem.classList.add("service-item");
+
+      const serviceDetails = document.createElement("div");
+      serviceDetails.classList.add("service-details");
+      serviceDetails.innerHTML = `
+        <strong class="service-label">Tipo de Servicio:</strong>
+        <span class="service-info">${service.type}</span>
+        <br>
+        <strong class="service-label">Duración:</strong>
+        <span class="service-info">${service.time}</span>
+        <br>
+        <strong class="service-label">Precio:</strong>
+        <span class="service-info">${service.price}</span>
+      `;
+
+      const serviceActions = document.createElement("div");
+      serviceActions.classList.add("service-actions");
+      serviceActions.innerHTML = `
+        <button class="edit-button" onclick="editService(${index})"><i class='bx bx-edit'></i></button>
+        <button class="delete-button" onclick="deleteService(${index})"><i class='bx bx-trash'></i></button>
+      `;
+
+      serviceItem.appendChild(serviceDetails);
+      serviceItem.appendChild(serviceActions);
+
+      serviceList.appendChild(serviceItem);
+    });
+  }
+
+  // Función para editar un servicio (pendiente de implementar)
+  function editService(index) {
+    // Implementa la lógica de edición en Django y Python aquí
+  }
+
+  // Función para eliminar un servicio
+  function deleteService(index) {
+    // Implementa la lógica de eliminación en Django y Python aquí
+    servicios.splice(index, 1);
+    showServices();
+  }
+
+  // Muestra los servicios al cargar la página
+  showServices();
+</script>
+```
+
+Este código está diseñado para trabajar con tu estructura HTML actual, específicamente con los elementos relacionados con los servicios. Por favor, asegúrate de que los identificadores (`id`) en tu HTML coincidan con los que se utilizan en el script JavaScript. En particular, asegúrate de tener un elemento con el ID `addServiceForm` y otro con el ID `serviceList`.
+
+</body>
+</html>
+
+
+
+
+
